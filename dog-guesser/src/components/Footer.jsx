@@ -10,7 +10,7 @@ export default function Footer() {
                 <img className='w-16' src="./assets/paw-solid.svg" alt="app logo" />
                 <p className='font-semibold text-yellow-800 hover:text-white font-mono lg:text-3xl text-2xl select-none cursor-pointer'>Paws and Guess</p>
             </div>
-            <div className='flex flex-col md:flex-row justify-between items-center p-10 gap-4'>
+            <div className='flex flex-col md:flex-row justify-between items-center py-10 gap-4'>
                 <ul className='text-xl font-mono flex gap-3 items-center'> Contact:
                     <li><a href="https://www.facebook.com/gabriela.manolache.739/" target='_blank' rel="noopener noreferrer"><FontAwesomeIcon className='hover:text-yellow-800' icon={faFacebook} size="2xl" /></a></li>
                     <li><a href="https://www.instagram.com/mano.gabriela/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon className='hover:text-yellow-800' icon={faInstagram} size="2xl" /></a></li>
