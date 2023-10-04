@@ -4,13 +4,16 @@ import PlayButton from './PlayButton';
 import Features from './Features';
 import Start from './Start';
 import AboutApp from './AboutApp';
+import Game from './Game';
 
 export default function Content() {
     const [play, setPlay] = useState(false);
+    const [game, setGame] = useState(false);
     const letPlay = () => {
         if (play === false) {
             setPlay(true);
         }
+        setGame(true);
     }
 
     return (
@@ -24,6 +27,7 @@ export default function Content() {
                     </div>
                 </>
             }
+            {game && <Game />}
             <PlayButton letPlay={letPlay} />
             <AboutApp />
         </div>

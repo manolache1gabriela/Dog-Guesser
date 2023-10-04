@@ -6,7 +6,7 @@ import { faLink } from '@fortawesome/free-solid-svg-icons'
 export default function Footer() {
     return (
         <div className='px-10 lg:px-20 py-5 bg-green-200'>
-            <div className='flex justify-between items-center'>
+            <div className='flex gap-10 items-center'>
                 <img className='w-16' src="./assets/paw-solid.svg" alt="app logo" />
                 <p className='font-semibold text-yellow-800 hover:text-white font-mono lg:text-3xl text-2xl select-none cursor-pointer'>Paws and Guess</p>
             </div>
