@@ -28,7 +28,7 @@ export default function Content() {
                 </>
             }
             {game && <Game />}
-            <PlayButton letPlay={letPlay} />
+            {!game && < PlayButton letPlay={letPlay} />}
             <AboutApp />
         </div>
     )
