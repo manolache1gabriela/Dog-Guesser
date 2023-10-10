@@ -4,7 +4,22 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        'wider': 'wider linear 15s infinite'
+      },
+      keyframes: {
+        wider: {
+          '100%': {
+            width: '100%',
+            backgroundColor: 'red'
+          },
+          '50%': {
+            backgroundColor: 'green'
+          }
+        }
+      }
+    },
   },
   safelist: [
     {

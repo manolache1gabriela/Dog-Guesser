@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useQuery } from 'react-query'
 import Error from './Error';
 import Correct from './Correct';
@@ -12,13 +12,15 @@ export default function Game() {
     const [correct, setCorrect] = useState(false);
     const [show, setShow] = useState(false);
     const [points, setPoints] = useState(0);
-    const [time, setTime] = useState(10);
+    const [time, setTime] = useState(15);
+    const [isCountdown, setIsCountdown] = useState(true);
     const { data, refetch, isLoading, isSuccess, isError } = useQuery('dog', getDogInfo);
 
     async function getDogInfo() {
         const dogs = await fetchTheDog();
         const otherDogs = await fetchOtherDogs(dogs);
         let link = await fetchDogs(dogs);
+
         return [dogs, link, otherDogs];
     }
 
@@ -77,8 +79,28 @@ export default function Game() {
             setTimeout(() => {
                 setShow(false)
                 refetch();
-            }, 1000)
+            }, 1000);
+            setIsCountdown(false);
+            setIsCountdown(true);
         }
+    }
+
+    function useInterval(callback, delay) {
+        const savedCallback = useRef();
+
+        useEffect(() => {
+            savedCallback.current = callback;
+        }, [callback]);
+
+        useEffect(() => {
+            function tick() {
+                savedCallback.current();
+            }
+            if (delay !== null) {
+                let id = setInterval(tick, delay);
+                return () => clearInterval(id);
+            }
+        }, [delay]);
     }
 
     function nextDog() {
@@ -86,23 +108,26 @@ export default function Game() {
         refetch();
     }
 
-    setTimeout(() => {
-        nextDog();
-        setTime(10);
-    }, 10000);
 
-    // setTimeout(() => {
-    //     let newTime = time - 1;
-    //     setTime(newTime)
-    // }, 1000);
+    useInterval(() => {
+        let newTime = time - 1;
+        setTime(newTime)
+    }, isCountdown ? 1000 : null);
+
+    useInterval(() => {
+        setIsCountdown(false);
+        nextDog();
+        setTime(15);
+        setIsCountdown(true);
+    }, isCountdown ? 15000 : null);
 
     return (
         <div>
             {isLoading && <Loading />}
             {isError && <Error />}
             {isSuccess &&
-                <div className='flex justify-between'>
-                    <Time time={time} />
+                <div className='flex justify-center md:justify-between items-center flex-col-reverse md:flex-row'>
+                    <Time time={time} isCountdown={isCountdown} />
                     < Score points={points} setPoints={setPoints} />
                 </div>}
             <div className='flex flex-col'>
@@ -116,10 +141,10 @@ export default function Game() {
                     <div className='w-full py-10 flex flex-col md:flex-row gap-10'>
                         <div style={{ backgroundImage: `url('${data[1]}'` }} className="h-[30rem] w-full border-2 bg-cover bg-no-repeat bg-center border-yellow-800 rounded-xl"></div>
                         <div className='w-full grid grid-rows-4 md:grid-cols-2 md:grid-rows-2 gap-2'>
-                            {data[2].map((dog) => (<button onClick={() => isCorrect(dog)} key={dog} className='bg-green-100 hover:bg-yellow-600 rounded-xl h-16 md:h-full'>{dog}</button>))}
+                            {data[2].map((dog) => (<button onClick={() => isCorrect(dog)} key={dog} className='bg-green-100 hover:animate-pulse hover:bg-yellow-600 rounded-xl h-16 md:h-full font-mono capitalize'>{dog}</button>))}
                         </div>
                     </div>
-                    <button className='bg-yellow-800 hover:bg-yellow-600 font-semibold text-white w-64 h-16 rounded-xl my-4 text-2xl font-mono' onClick={nextDog}>Other Dog</button>
+                    <button className='bg-yellow-800 hover:bg-yellow-600 font-semibold text-white w-64 h-16 rounded-xl mb-4 text-2xl font-mono' onClick={nextDog}>Other Dog</button>
                 </div>
             }
         </div >
