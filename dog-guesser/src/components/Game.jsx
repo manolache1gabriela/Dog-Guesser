@@ -77,11 +77,14 @@ export default function Game() {
         if (isCorrectAnswer) {
             setPoints(quantity);
             setTimeout(() => {
+                const setterCountdown = false;
                 setShow(false)
                 refetch();
+                setCorrect(false)
+                setIsCountdown(setterCountdown);
+                setTime(15);
+                setIsCountdown(!setterCountdown);
             }, 1000);
-            setIsCountdown(false);
-            setIsCountdown(true);
         }
     }
 
@@ -104,10 +107,13 @@ export default function Game() {
     }
 
     function nextDog() {
-        setShow(false)
+        const setterCountdown = false;
+        setIsCountdown(setterCountdown);
+        setShow(false);
         refetch();
+        setTime(15);
+        setIsCountdown(!setterCountdown);
     }
-
 
     useInterval(() => {
         let newTime = time - 1;
@@ -115,10 +121,11 @@ export default function Game() {
     }, isCountdown ? 1000 : null);
 
     useInterval(() => {
-        setIsCountdown(false);
+        const setterCountdown = false;
+        setIsCountdown(setterCountdown);
         nextDog();
         setTime(15);
-        setIsCountdown(true);
+        setIsCountdown(!setterCountdown);
     }, isCountdown ? 15000 : null);
 
     return (
@@ -127,7 +134,7 @@ export default function Game() {
             {isError && <Error />}
             {isSuccess &&
                 <div className='flex justify-center md:justify-between items-center flex-col-reverse md:flex-row'>
-                    <Time time={time} isCountdown={isCountdown} />
+                    <Time time={time} isCountdown={isCountdown} correct={correct} />
                     < Score points={points} setPoints={setPoints} />
                 </div>}
             <div className='flex flex-col'>

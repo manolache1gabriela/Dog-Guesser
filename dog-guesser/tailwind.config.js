@@ -10,12 +10,15 @@ module.exports = {
       },
       keyframes: {
         wider: {
+          '75%': {
+            backgroundColor: 'green'
+          },
+          '90%': {
+            backgroundColor: 'orange'
+          },
           '100%': {
             width: '100%',
             backgroundColor: 'red'
-          },
-          '50%': {
-            backgroundColor: 'green'
           }
         }
       }
