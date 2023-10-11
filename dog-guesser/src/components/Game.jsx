@@ -24,6 +24,11 @@ export default function Game() {
         return [dogs, link, otherDogs];
     }
 
+    setTimeout(() => {
+        let pontsQuantity = JSON.parse(localStorage.getItem('game') ?? '');
+        setPoints(pontsQuantity)
+    })
+
     async function fetchTheDog() {
         let res = await fetch('https://dog.ceo/api/breeds/list/all');
         res = await res.json();
@@ -75,7 +80,7 @@ export default function Game() {
         setCorrect(isCorrectAnswer);
         const quantity = points + 1;
         if (isCorrectAnswer) {
-            setPoints(quantity);
+            // setPoints(quantity);
             setTimeout(() => {
                 const setterCountdown = false;
                 setShow(false)
@@ -84,6 +89,7 @@ export default function Game() {
                 setIsCountdown(setterCountdown);
                 setTime(15);
                 setIsCountdown(!setterCountdown);
+                saveToLocal();
             }, 1000);
         }
     }
@@ -127,6 +133,16 @@ export default function Game() {
         setTime(15);
         setIsCountdown(!setterCountdown);
     }, isCountdown ? 15000 : null);
+
+    function saveToLocal() {
+        const quantity = points + 1;
+        setPoints(quantity);
+        let gamePoints = JSON.parse(localStorage.getItem('game') ?? '{}');
+        gamePoints = quantity;
+        localStorage.setItem('game', JSON.stringify(gamePoints));
+    }
+
+
 
     return (
         <div>
