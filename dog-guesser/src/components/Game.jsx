@@ -25,8 +25,8 @@ export default function Game() {
     }
 
     setTimeout(() => {
-        let pontsQuantity = JSON.parse(localStorage.getItem('game') ?? '');
-        setPoints(pontsQuantity)
+        let pointsQuantity = JSON.parse(localStorage.getItem('game') ?? '');
+        setPoints(pointsQuantity)
     })
 
     async function fetchTheDog() {
