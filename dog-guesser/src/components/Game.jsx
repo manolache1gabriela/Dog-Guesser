@@ -78,9 +78,7 @@ export default function Game() {
         setShow(true);
         const isCorrectAnswer = dog === data[0];
         setCorrect(isCorrectAnswer);
-        const quantity = points + 1;
         if (isCorrectAnswer) {
-            // setPoints(quantity);
             setTimeout(() => {
                 const setterCountdown = false;
                 setShow(false)
